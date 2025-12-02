@@ -54,10 +54,35 @@ def file_metadata():
         }
         results.append(data)
 
-    response = make_response(jsonify(results), 200)
+    response = make_response(jsonify({"files": results}), 200)
     response.headers['Content-Type'] = 'application/json'    
     return response
 
+@app.route('/api/v2/filemetadata', methods=['GET'])
+def file_metadata_v2():
+    auth = request.authorization
+    if not validate_credentials(auth):
+        resp = make_response('Authentication required', 401)
+        resp.headers['WWW-Authenticate'] = 'Basic realm="Secure Area"'
+        return resp
+
+    results = []
+    for i in range(5000):
+        id = random_url()
+        data = {
+            "alternate_name_s": random_string('ds'),
+            "associationType_s": random.choice(["Datasheet", "Manual", "Specification"]),
+            "id": id,
+            "intentDocumentType_s": random.choice(["Technical Documents", "User Guide", "Reference Manual"]),
+            "last_modification_date_s": random_date(),
+            "locale_s": random.choice(["en", "fr", "de", "it"]),
+            "counter_i": i
+        }
+        results.append(data)
+
+    response = make_response(jsonify(results), 200)
+    response.headers['Content-Type'] = 'application/json'    
+    return response
 
 if __name__ == '__main__':
     # For local HTTPS, generate cert.pem and key.pem using OpenSSL
