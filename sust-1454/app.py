@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 USER = os.getenv('API_USER', 'username')
 PASS = os.getenv('API_PASS', 'password')  # Set your password in environment
-NUM_RECORDS = 1000
+NUM_RECORDS = 10
 
 
 def validate_credentials(auth):
@@ -59,7 +59,7 @@ def file_metadata():
     response.headers['Content-Type'] = 'application/json'    
     return response
 
-@app.route('/api/v1/filemetadata/<int:count>', methods=['GET'])
+@app.route('/api/v1/filemetadata/<count>', methods=['GET'])
 def file_metadata_count(count):
     auth = request.authorization
     if not validate_credentials(auth):
@@ -67,8 +67,13 @@ def file_metadata_count(count):
         resp.headers['WWW-Authenticate'] = 'Basic realm="Secure Area"'
         return resp
 
+    try:
+        count_int = int(count)
+    except (ValueError, TypeError):
+        count_int = NUM_RECORDS
+
     results = []
-    for i in range(count):
+    for i in range(count_int):
         id = random_url()
         data = {
             "alternate_name_s": random_string('ds'),
