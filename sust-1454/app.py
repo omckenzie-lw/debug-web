@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 USER = os.getenv('API_USER', 'username')
 PASS = os.getenv('API_PASS', 'password')  # Set your password in environment
+NUM_RECORDS = 1000
 
 
 def validate_credentials(auth):
@@ -41,7 +42,7 @@ def file_metadata():
         return resp
 
     results = []
-    for i in range(5000):
+    for i in range(NUM_RECORDS):
         id = random_url()
         data = {
             "alternate_name_s": random_string('ds'),
@@ -58,8 +59,8 @@ def file_metadata():
     response.headers['Content-Type'] = 'application/json'    
     return response
 
-@app.route('/api/v2/filemetadata', methods=['GET'])
-def file_metadata_v2():
+@app.route('/api/v1/filemetadata/<int:count>', methods=['GET'])
+def file_metadata_count(count):
     auth = request.authorization
     if not validate_credentials(auth):
         resp = make_response('Authentication required', 401)
@@ -67,7 +68,7 @@ def file_metadata_v2():
         return resp
 
     results = []
-    for i in range(5000):
+    for i in range(count):
         id = random_url()
         data = {
             "alternate_name_s": random_string('ds'),
@@ -80,7 +81,7 @@ def file_metadata_v2():
         }
         results.append(data)
 
-    response = make_response(jsonify(results), 200)
+    response = make_response(jsonify({"files": results}), 200)
     response.headers['Content-Type'] = 'application/json'    
     return response
 
