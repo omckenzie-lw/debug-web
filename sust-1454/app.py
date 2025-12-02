@@ -69,6 +69,8 @@ def file_metadata_count(count):
 
     try:
         count_int = int(count)
+        if count_int > 99999:
+            count_int = NUM_RECORDS
     except (ValueError, TypeError):
         count_int = NUM_RECORDS
 
