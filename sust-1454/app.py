@@ -53,7 +53,10 @@ def file_metadata():
             "counter_i": i
         }
         results.append(data)
-    return jsonify(results)
+
+    response = make_response(jsonify(results), 200)
+    response.headers['Content-Type'] = 'application/json'    
+    return response
 
 
 if __name__ == '__main__':
