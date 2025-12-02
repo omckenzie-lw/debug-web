@@ -41,7 +41,7 @@ def file_metadata():
         return resp
 
     results = []
-    for _ in range(50):
+    for i in range(5000):
         id = random_url()
         data = {
             "alternate_name_s": random_string('ds'),
@@ -50,6 +50,7 @@ def file_metadata():
             "intentDocumentType_s": random.choice(["Technical Documents", "User Guide", "Reference Manual"]),
             "last_modification_date_s": random_date(),
             "locale_s": random.choice(["en", "fr", "de", "it"]),
+            "counter_i": i
         }
         results.append(data)
     return jsonify(results)
