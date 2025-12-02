@@ -92,6 +92,10 @@ def file_metadata_count(count):
     response.headers['Content-Type'] = 'application/json'    
     return response
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "ok"}), 200
+
 if __name__ == '__main__':
     # For local HTTPS, generate cert.pem and key.pem using OpenSSL
     port = int(os.environ.get('PORT', 5000))
