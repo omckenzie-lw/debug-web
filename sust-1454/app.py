@@ -58,4 +58,4 @@ def file_metadata():
 
 if __name__ == '__main__':
     # For local HTTPS, generate cert.pem and key.pem using OpenSSL
-    app.run()  # This runs on localhost:5000 by default
+    app.run(port=5000)  # This runs on localhost:8080 by default
