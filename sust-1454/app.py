@@ -47,7 +47,7 @@ def file_metadata():
         data = {
             "alternate_name_s": random_string('ds'),
             "associationType_s": random.choice(["Datasheet", "Manual", "Specification"]),
-            "id": id,
+            "id": "id-" + str(i),
             "intentDocumentType_s": random.choice(["Technical Documents", "User Guide", "Reference Manual"]),
             "last_modification_date_s": random_date(),
             "locale_s": random.choice(["en", "fr", "de", "it"]),
@@ -80,7 +80,7 @@ def file_metadata_count(count):
         data = {
             "alternate_name_s": random_string('ds'),
             "associationType_s": random.choice(["Datasheet", "Manual", "Specification"]),
-            "id": id,
+            "id": "id-" + str(i),
             "intentDocumentType_s": random.choice(["Technical Documents", "User Guide", "Reference Manual"]),
             "last_modification_date_s": random_date(),
             "locale_s": random.choice(["en", "fr", "de", "it"]),
